@@ -18,10 +18,7 @@ const Login = () => {
         try {
             const data = await loginUser(form);
 
-            // Save token
             localStorage.setItem("token", data.token);
-
-            // Redirect
             navigate("/");
         } catch (err) {
             console.error(err);
@@ -30,30 +27,54 @@ const Login = () => {
     };
 
     return (
-        <div style={{ padding: "20px" }}>
-            <h2>Login</h2>
+        <div className="min-h-screen flex items-center justify-center bg-gray-100">
 
-            <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                onChange={handleChange}
-            />
+            {/* Card */}
+            <div className="bg-white p-8 rounded-2xl shadow-md w-96">
 
-            <br /><br />
+                <h2 className="text-2xl font-bold text-center mb-6">
+                    Welcome Back 👋
+                </h2>
 
-            <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                onChange={handleChange}
-            />
+                {/* Email */}
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    onChange={handleChange}
+                    className="w-full mb-4 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
 
-            <br /><br />
+                {/* Password */}
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    onChange={handleChange}
+                    className="w-full mb-4 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
 
-            <button onClick={handleLogin}>Login</button>
+                {/* Button */}
+                <button
+                    onClick={handleLogin}
+                    className="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-600 transition"
+                >
+                    Login
+                </button>
+
+                {/* Footer */}
+                <p className="text-center text-gray-500 mt-4">
+                    Don’t have an account?{" "}
+                    <span
+                        className="text-blue-500 cursor-pointer"
+                        onClick={() => navigate("/register")}
+                    >
+                        Register
+                    </span>
+                </p>
+            </div>
         </div>
     );
 };
 
-export default Login;
+export default Login; 

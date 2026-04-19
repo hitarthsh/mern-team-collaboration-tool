@@ -9,42 +9,88 @@ const Register = () => {
         password: "",
     });
 
-    const navigate = useNavigate();   // ✅ add this
+    const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate();
+
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
+    };
 
     const handleRegister = async () => {
         try {
+            setLoading(true);
+
             await API.post("/auth/register", form);
 
             alert("User Registered ✅");
 
-            navigate("/login");   // ✅ redirect to login
+            navigate("/login");
         } catch (err) {
             console.error(err);
             alert("Register failed ❌");
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
-        <div>
-            <h2>Register</h2>
+        <div className="min-h-screen flex items-center justify-center bg-gray-100">
 
-            <input
-                placeholder="Name"
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-            />
+            {/* Card */}
+            <div className="bg-white p-8 rounded-2xl shadow-md w-96">
 
-            <input
-                placeholder="Email"
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-            />
+                <h2 className="text-2xl font-bold text-center mb-6">
+                    Create Account 🚀
+                </h2>
 
-            <input
-                placeholder="Password"
-                type="password"
-                onChange={(e) => setForm({ ...form, password: e.target.value })}
-            />
+                {/* Name */}
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Enter your name"
+                    onChange={handleChange}
+                    className="w-full mb-4 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
 
-            <button onClick={handleRegister}>Register</button>
+                {/* Email */}
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    onChange={handleChange}
+                    className="w-full mb-4 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+
+                {/* Password */}
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    onChange={handleChange}
+                    className="w-full mb-4 p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+
+                {/* Button */}
+                <button
+                    onClick={handleRegister}
+                    disabled={loading}
+                    className="w-full bg-green-500 text-white p-3 rounded-lg hover:bg-green-600 transition"
+                >
+                    {loading ? "Registering..." : "Register"}
+                </button>
+
+                {/* Footer */}
+                <p className="text-center text-gray-500 mt-4">
+                    Already have an account?{" "}
+                    <span
+                        className="text-blue-500 cursor-pointer"
+                        onClick={() => navigate("/login")}
+                    >
+                        Login
+                    </span>
+                </p>
+            </div>
         </div>
     );
 };
